@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
+import "../App.css";
 
-const FluidSimulation = () => {
-  const canvasRef = useRef(null);
+const useFluidSimulation = (canvasRef) => {
   useEffect(() => {
     "use strict";
 
@@ -15,10 +15,10 @@ const FluidSimulation = () => {
       TEXTURE_DOWNSAMPLE: 1,
       DENSITY_DISSIPATION: 0.98,
       VELOCITY_DISSIPATION: 0.99,
-      PRESSURE_DISSIPATION: 0.8,
+      PRESSURE_DISSIPATION: 0.4,
       PRESSURE_ITERATIONS: 25,
       CURL: 28,
-      SPLAT_RADIUS: 0.004,
+      SPLAT_RADIUS: 0.005,
     };
 
     let pointers = [];
@@ -52,8 +52,14 @@ const FluidSimulation = () => {
           "OES_texture_half_float_linear"
         );
       }
+      gl.clearColor(0.0, 0.0, 0.0, 0.0);
 
-      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+      // Clear the color buffer with the new clear color
+      gl.clear(gl.COLOR_BUFFER_BIT);
+
+      // Render a colored rectangle covering the entire canvas
+      gl.clearColor(14 / 255, 15 / 255, 27 / 255, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
 
       const halfFloatTexType = isWebGL2
         ? gl.HALF_FLOAT
@@ -815,44 +821,43 @@ const FluidSimulation = () => {
         canvas.width = canvas.clientWidth;
         canvas.height = canvas.clientHeight;
         initFramebuffers();
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = rgb(14, 15, 27);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
     }
 
-    canvas.addEventListener("mousemove", (e) => {
+    const handleMouseMove = (e) => {
       pointers[0].moved = pointers[0].down;
       pointers[0].dx = (e.offsetX - pointers[0].x) * 10.0;
       pointers[0].dy = (e.offsetY - pointers[0].y) * 10.0;
       pointers[0].x = e.offsetX;
       pointers[0].y = e.offsetY;
-    });
+    };
 
-    canvas.addEventListener(
-      "touchmove",
-      (e) => {
-        e.preventDefault();
-        const touches = e.targetTouches;
-        for (let i = 0; i < touches.length; i++) {
-          let pointer = pointers[i];
-          pointer.moved = pointer.down;
-          pointer.dx = (touches[i].pageX - pointer.x) * 10.0;
-          pointer.dy = (touches[i].pageY - pointer.y) * 10.0;
-          pointer.x = touches[i].pageX;
-          pointer.y = touches[i].pageY;
-        }
-      },
-      false
-    );
+    const handleTouchMove = (e) => {
+      e.preventDefault();
+      const touches = e.targetTouches;
+      for (let i = 0; i < touches.length; i++) {
+        let pointer = pointers[i];
+        pointer.moved = pointer.down;
+        pointer.dx = (touches[i].pageX - pointer.x) * 10.0;
+        pointer.dy = (touches[i].pageY - pointer.y) * 10.0;
+        pointer.x = touches[i].pageX;
+        pointer.y = touches[i].pageY;
+      }
+    };
 
-    canvas.addEventListener("mousemove", () => {
+    const handleMouseMoveColor = () => {
       pointers[0].down = true;
       pointers[0].color = [
         Math.random() + 0.2,
         Math.random() + 0.2,
         Math.random() + 0.2,
       ];
-    });
+    };
 
-    canvas.addEventListener("touchstart", (e) => {
+    const handleTouchStart = (e) => {
       e.preventDefault();
       const touches = e.targetTouches;
       for (let i = 0; i < touches.length; i++) {
@@ -868,21 +873,41 @@ const FluidSimulation = () => {
           Math.random() + 0.2,
         ];
       }
-    });
+    };
 
-    window.addEventListener("mouseleave", () => {
+    const handleMouseLeave = () => {
       pointers[0].down = false;
-    });
+    };
 
-    window.addEventListener("touchend", (e) => {
+    const handleTouchEnd = (e) => {
       const touches = e.changedTouches;
       for (let i = 0; i < touches.length; i++)
         for (let j = 0; j < pointers.length; j++)
           if (touches[i].identifier == pointers[j].id) pointers[j].down = false;
-    });
-  }, []);
+    };
 
-  return <canvas ref={canvasRef} width={800} height={600} />;
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("mousemove", handleMouseMoveColor);
+    document.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("mousemove", handleMouseMoveColor);
+      document.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
+};
+const FluidSimulation = () => {
+  const canvasRef = useRef(null);
+  useFluidSimulation(canvasRef);
+
+  return <canvas ref={canvasRef} />;
 };
 
 export default FluidSimulation;

@@ -2,9 +2,9 @@ import React from "react";
 
 export default function AboutUs() {
   return (
-    <div className="flex flex-col space-y-7 text-white font-sora justify-even h-auto items-center py-9 mb-[5rem]">
+    <div className="flex flex-col space-y-7 text-white font-sora justify-even h-auto items-center py-9 mb-[5rem] p-5">
       <div>
-        <p className="bg-[#0e0f1b] text-[1.2rem] text-center">
+        <p className=" text-[1.2rem] text-center">
           Trusted by thousands of users around the world
         </p>
       </div>

@@ -1,8 +1,65 @@
-.animation-canvas {
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; 
+  background-color: rgb(15, 15, 27) !important;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+canvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1; /* Ensure canvas is behind other content */
+  width: 100%;
+  height: 100%;
+  background-color: rgb(15, 15, 27) !important;
+  z-index: 2; /* Set z-index to -1 to place it behind the content */
+}
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* pointer-events: none; */
+  overflow: auto;
+  height: 100%;
+  z-index: 3;
+  overflow: auto;
+  background: transparent !important;
+  /* position: relative;  */
+}
+
+.hero,
+.aboutus,
+.features,
+.footer {
+  pointer-events: none;
+ 
+}
+
+@media (max-width: 768px) {
+  .background-canvas-desktop,
+  canvas {
+    display: none;
+    z-index: -1;
+  }
+  .hero,
+  .aboutus,
+  .features,
+  .footer {
+    pointer-events: auto;
+    
+  }
+
 }

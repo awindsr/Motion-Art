@@ -7,21 +7,28 @@ import Features from "./components/Features";
 import Footer from "./components/Footer";
 import FluidSimulation from "./components/FluidSimulation";
 
-
-
 function App() {
-
-
   return (
     <>
-  
-      <div className="bg-[#0e0f1b] w-screen h-auto ">
-      <FluidSimulation />
-        <NavBar />
-        <Hero />
-        <AboutUs />
-        <Features />
-        <Footer />
+      <div className="app-container bg-[#0e0f1b]">
+        <div className="background-canvas-desktop">
+          <FluidSimulation className="background-canvas" />
+        </div>
+        <div className="content ">
+          <NavBar />
+          <div className="hero">
+            <Hero />
+          </div>
+          <div className="aboutus">
+            <AboutUs />
+          </div>
+          <div className="features">
+            <Features />
+          </div>
+          <div className="footer">
+            <Footer />
+          </div>
+        </div>
       </div>
     </>
   );
