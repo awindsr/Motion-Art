@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Sora:wght@100..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.text-gradient {
+  background: linear-gradient(90deg, #F87516 0%, #5E11FF 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.purschase-envato{
+  background: linear-gradient(90deg,#5E11FF 0%, #F87516 70%);
+}
+
+.feature-box {
+  background: linear-gradient(180deg, #100922 0%, #231e2d 100%);
+  border-width: 2px;
+  border-style: solid;
+  /* border-image: linear-gradient(180deg, #56565641 0%, #46464617) .5; */
+  border-color: #56565641; 
+  border-radius: 26px;
+}
+
+.footer {
+  background: linear-gradient(90deg, #f87416ce 0%, #5c11ffc2 70%);
+}
