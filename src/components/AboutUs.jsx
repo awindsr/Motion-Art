@@ -9,8 +9,8 @@ export default function AboutUs() {
         </p>
       </div>
       <div className="md:flex md:justify-around md:w-screen md:items-center">
-        <RatingItem image="./motionarteffect-img1.png" />
         <RatingItem image="./motionarteffect-img2.png" />
+        <RatingItem image="./motionarteffect-img1.png" />
         <RatingItem image="./motionarteffect-img3.png" />
       </div>
     </div>

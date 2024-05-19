@@ -52,7 +52,7 @@ export default function Features() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col space-y-9 leading-9 md:leading-[2.8rem] items-center text-white justify-center  mb-[5rem] h-screen">
+      <section className="flex flex-col space-y-9 leading-9 md:leading-[2.8rem] items-center text-white justify-center  mb-[5rem] md:h-screen">
         <div className="text-center flex flex-col items-center">
           <h2 className="font-sora text-white text-center font-medium text-[1.5rem] mb-5 md:text-[2.4rem] md:max-w-[40rem] ">
             Apply On Any Section Or Enable For Whole Page
