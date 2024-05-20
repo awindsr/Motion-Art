@@ -26,7 +26,10 @@ canvas {
   overflow: auto;
   background: transparent !important;
 }
-
+.nav-btn {
+  pointer-events: auto;
+}
+.navbar,
 .hero,
 .aboutus,
 .features{

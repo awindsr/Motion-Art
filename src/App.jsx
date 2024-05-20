@@ -16,7 +16,9 @@ function App() {
           <FluidSimulation className="background-canvas" />
         </div>
         <div className="content" id="content">
-          <NavBar />
+          <div className="navbar">
+            <NavBar />
+          </div>
           <div className="hero">
             <Hero />
           </div>
