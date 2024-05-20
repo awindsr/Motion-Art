@@ -6,7 +6,7 @@ const useFluidSimulation = (canvasRef) => {
     "use strict";
 
     const canvas = canvasRef.current;
-    // if (!canvas) return;
+    if (!canvas) return;
 
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
@@ -15,9 +15,9 @@ const useFluidSimulation = (canvasRef) => {
       TEXTURE_DOWNSAMPLE: 1,
       DENSITY_DISSIPATION: 0.98,
       VELOCITY_DISSIPATION: 0.99,
-      PRESSURE_DISSIPATION: 0.4,
+      PRESSURE_DISSIPATION: 0.5,
       PRESSURE_ITERATIONS: 25,
-      CURL: 28,
+      CURL: 35,
       SPLAT_RADIUS: 0.005,
     };
 
@@ -836,17 +836,25 @@ const useFluidSimulation = (canvasRef) => {
     };
 
     const handleTouchMove = (e) => {
-      e.preventDefault();
       const touches = e.targetTouches;
       for (let i = 0; i < touches.length; i++) {
-        let pointer = pointers[i];
-        pointer.moved = pointer.down;
-        pointer.dx = (touches[i].pageX - pointer.x) * 10.0;
-        pointer.dy = (touches[i].pageY - pointer.y) * 10.0;
-        pointer.x = touches[i].pageX;
-        pointer.y = touches[i].pageY;
+          let pointer = pointers[i];
+          pointer.moved = pointer.down;
+          pointer.dx = (touches[i].pageX - pointer.x) * 10.0;
+          pointer.dy = (touches[i].pageY - pointer.y) * 10.0;
+          pointer.x = touches[i].pageX;
+          pointer.y = touches[i].pageY;
       }
-    };
+  
+
+      const scrollableElement = document.getElementById("content");
+      if (scrollableElement.contains(e.target)) {
+          return;
+      }
+  
+      e.preventDefault(); 
+  };
+  
 
     const handleMouseMoveColor = () => {
       pointers[0].down = true;
@@ -890,12 +898,12 @@ const useFluidSimulation = (canvasRef) => {
     document.addEventListener("touchmove", handleTouchMove, { passive: false });
     document.addEventListener("mousemove", handleMouseMoveColor);
     document.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("mouseleave", handleMouseLeave);
-    window.addEventListener("touchend", handleTouchEnd);
+    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("touchend", handleTouchEnd);
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("touchmove", handleTouchMove);
+      // document.removeEventListener("touchmove", handleTouchMove);
       document.removeEventListener("mousemove", handleMouseMoveColor);
       document.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("mouseleave", handleMouseLeave);
@@ -907,7 +915,7 @@ const FluidSimulation = () => {
   const canvasRef = useRef(null);
   useFluidSimulation(canvasRef);
 
-  return <canvas ref={canvasRef} />;
+  return <canvas ref={canvasRef}  className="canvas"/>;
 };
 
 export default FluidSimulation;

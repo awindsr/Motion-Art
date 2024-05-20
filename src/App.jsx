@@ -1,6 +1,7 @@
 import "./App.css";
-import { useRef } from "react";
+import { useState } from "react";
 import Hero from "./components/Hero";
+
 import NavBar from "./components/NavBar";
 import AboutUs from "./components/AboutUs";
 import Features from "./components/Features";
@@ -14,7 +15,7 @@ function App() {
         <div className="background-canvas-desktop">
           <FluidSimulation className="background-canvas" />
         </div>
-        <div className="content ">
+        <div className="content" id="content">
           <NavBar />
           <div className="hero">
             <Hero />
