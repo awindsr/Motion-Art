@@ -822,7 +822,7 @@ const useFluidSimulation = (canvasRef) => {
         canvas.height = canvas.clientHeight;
         initFramebuffers();
         const ctx = canvas.getContext("2d");
-        ctx.fillStyle = rgb(14, 15, 27);
+        ctx.fillStyle = rgb(14/225, 15/225, 27/225);
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
     }
